@@ -1,4 +1,4 @@
-from block import Block
+from backend.chain.block import Block
 
 class Blockchain:
     """
