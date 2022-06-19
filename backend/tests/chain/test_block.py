@@ -33,5 +33,22 @@ def test_slowly_mined_block():
     last_block = Block.mine_block(Block.genesis(), 'testing')
 
     time.sleep(MINE_RATE / SECONDS)
+    
+    mined_block = Block.mine_block(last_block, 'blocks')
+    assert mined_block.difficulty == last_block.difficulty - 1
+
+def test_mine_block_difficulty_limits_at_one():
+    last_block = Block(
+        time.time_ns(),
+        'test_last_hash',
+        'test_hash',
+        'test_data',
+        1,
+        0
+    )
+
+    time.sleep(MINE_RATE / SECONDS)
 
     mined_block = Block.mine_block(last_block, 'blocks')
+
+    assert mined_block.difficulty == 1
